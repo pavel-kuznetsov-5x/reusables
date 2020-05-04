@@ -6,11 +6,6 @@ import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.ZoneId
-import org.threeten.bp.ZonedDateTime
-import org.threeten.bp.format.DateTimeFormatter
 import java.net.ConnectException
 import java.net.NoRouteToHostException
 import java.net.SocketTimeoutException
@@ -36,7 +31,7 @@ fun View.show() {
 }
 
 fun View.setInvisibleState(value: Boolean) {
-    visibility = if(value) {
+    visibility = if (value) {
         View.INVISIBLE
     } else {
         View.VISIBLE
@@ -44,7 +39,7 @@ fun View.setInvisibleState(value: Boolean) {
 }
 
 fun View.setGoneState(value: Boolean) {
-    visibility = if(value) {
+    visibility = if (value) {
         View.GONE
     } else {
         View.VISIBLE
@@ -58,7 +53,7 @@ fun <T> Single<T>.delayExecution(milliseconds: Int): Single<T> {
 fun <T> Single<T>.attachProgressbar(progressBar: View): Single<T> {
     return doOnSubscribe {
         progressBar.show()
-    }. doOnEvent { _, _ ->
+    }.doOnEvent { _, _ ->
         progressBar.hide()
     }
 }
@@ -71,13 +66,21 @@ fun TextView.textString(): String {
     return text.toString()
 }
 
-fun String.parseDate(dateTimeFormatter: DateTimeFormatter): LocalDate {
-    return LocalDate.parse(this, dateTimeFormatter)
-}
-
 fun <T : Any?> MutableLiveData<T>.initWith(initialValue: T) = apply { setValue(initialValue) }
 
-fun <T : Any?> MutableLiveData<T>.init(initializer: () -> T) = apply { setValue(initializer.invoke()) }
+fun <T : Any?> MutableLiveData<T>.init(initializer: () -> T) =
+    apply { setValue(initializer.invoke()) }
+
+fun Throwable.isNetworkError(t: Throwable): Boolean {
+    return (t is SocketTimeoutException
+            ||
+            t is UnknownHostException
+            ||
+            t is ConnectException
+            ||
+            t is NoRouteToHostException
+            )
+}
 
 fun String?.nullIfEmpty(): String? = if (this.isNullOrEmpty()) {
     null
@@ -85,11 +88,7 @@ fun String?.nullIfEmpty(): String? = if (this.isNullOrEmpty()) {
     this
 }
 
-fun ZonedDateTime.toLocalDateTimeOnThisZone(): LocalDateTime {
-    val zone = ZoneId.systemDefault()
-    val zoned = this.withZoneSameInstant(zone)
-    return zoned.toLocalDateTime()
-}
+
 
 fun Size.toStringHw(): String {
     return "${height}x$width"

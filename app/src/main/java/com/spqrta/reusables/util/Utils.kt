@@ -6,15 +6,23 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Build
 import android.util.Base64
 import android.view.KeyEvent
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 import io.reactivex.Observable
+import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.json.JSONArray
 import org.json.JSONObject
@@ -35,12 +43,23 @@ object Utils {
         }
     }
 
-    fun setStatusBarColor(activity: Activity, @ColorRes color: Int, setLight: Boolean? = null, @ColorRes compatColor: Int? = null) {
-        if(setLight != null) {
+    fun hideKeyboard(activity: Activity) {
+        val inputMethodManager =
+            activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        activity.currentFocus?.let {
+            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+        }
+    }
+
+    fun setStatusBarColor(
+        activity: Activity, @ColorRes color: Int,
+        setLight: Boolean? = null, @ColorRes compatColor: Int? = null
+    ) {
+        if (setLight != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 var flags = activity.window.decorView.systemUiVisibility
 
-                if(setLight) {
+                if (setLight) {
                     flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                     activity.window.decorView.systemUiVisibility = flags
 
@@ -59,11 +78,19 @@ object Utils {
         }
     }
 
-    fun hideKeyboard(activity: Activity) {
-        val inputMethodManager =
-            activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        activity.currentFocus?.let {
-            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+    fun getStringWithDebug(@StringRes res: Int, debugText: String): String {
+        return if (CustomApplication.appConfig.releaseMode) {
+            CustomApplication.context.getString(res)
+        } else {
+            debugText
+        }
+    }
+
+    fun getStringWithDebug(@StringRes res: Int, throwable: Throwable): String {
+        return if (CustomApplication.appConfig.releaseMode) {
+            CustomApplication.context.getString(res)
+        } else {
+            "${throwable::class.java.simpleName} ${throwable.message}"
         }
     }
 
@@ -108,8 +135,15 @@ object Utils {
                 || actionId == EditorInfo.IME_ACTION_NEXT
                 || (event?.action == KeyEvent.ACTION_UP && event.keyCode == KeyEvent.KEYCODE_ENTER)
     }
-}
 
+    fun setKeepScreenOn(window: Window, disable: Boolean) {
+        if(disable) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        } else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        }
+    }
+}
 
 
 class Optional<M>(private val optional: M?) {
@@ -177,8 +211,8 @@ object TimerObservable {
         return timer(delay.toLong())
     }
 
-    fun timer(delay: Long): Observable<Long> {
-        return Observable.timer(delay, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+    fun timer(delay: Long, scheduler: Scheduler = AndroidSchedulers.mainThread()): Observable<Long> {
+        return Observable.timer(delay, TimeUnit.MILLISECONDS, scheduler)
     }
 
     fun interval(delay: Int, initialDelay: Int? = null): Observable<Long> {
@@ -203,4 +237,4 @@ object TimerObservable {
     }
 }
 
-
+object Stub: Any()

@@ -19,7 +19,8 @@ fun <T> Observable<T>.applySchedulers(): Observable<T> {
 
 
 fun <T> Single<T>.applySchedulers(): Single<T> {
-        return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    return subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
 }
 
 fun <T> Single<Response<T>>.mapResponseBody(): Single<T> {
@@ -55,7 +56,7 @@ fun <T> Single<T>.applyGlobalTransformer(): Single<T> {
 
 fun <T> Single<T>.applyNetworkErrorTransformer(): Single<T> {
     return onErrorResumeNext {
-        if(it.isNetworkError()) {
+        if (it.isNetworkError()) {
             Single.error(NetworkError())
         } else {
             Single.error(it)
@@ -76,7 +77,7 @@ private fun isThrowableNetworkError(e: Throwable): Boolean {
             true
         }
         is RuntimeException -> {
-            if(e is CompositeException) {
+            if (e is CompositeException) {
                 e.exceptions.any {
                     it.isNetworkError()
                 }
