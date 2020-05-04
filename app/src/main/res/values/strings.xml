@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">reusables</string>
+    <string name="server_error">Ошибка сервера</string>
+    <string name="unknown_error">Неизвестная ошибка</string>
+</resources>
