@@ -1,4 +1,4 @@
-package com.spqrta.reusables.util
+package com.spqrta.reusables.utility
 
 class Meter(val tag: String = "") {
 

@@ -3,7 +3,7 @@ package com.spqrta.reusables
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import com.spqrta.reusables.util.Toaster
+import com.spqrta.reusables.utility.Toaster
 
 open class CustomApplication: Application() {
 

@@ -1,4 +1,4 @@
-package com.spqrta.reusables.util
+package com.spqrta.reusables.utility.utils
 
 import android.preference.PreferenceManager
 import com.spqrta.reusables.CustomApplication

@@ -1,4 +1,4 @@
-package com.spqrta.reusables.util
+package com.spqrta.reusables.utility
 
 import android.util.Log
 import com.spqrta.reusables.CustomApplication

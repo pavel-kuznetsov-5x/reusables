@@ -1,4 +1,4 @@
-package com.spqrta.reusables.util
+package com.spqrta.reusables.utility.utils
 
 import android.annotation.SuppressLint
 import android.os.Build

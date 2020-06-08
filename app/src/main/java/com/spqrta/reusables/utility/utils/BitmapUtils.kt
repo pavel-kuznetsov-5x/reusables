@@ -1,4 +1,4 @@
-package com.spqrta.reusables.util
+package com.spqrta.reusables.utility.utils
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -42,7 +42,10 @@ object BitmapUtils {
     }
 
     fun toBase64(bitmap: Bitmap): String {
-        return Base64.encodeToString(toByteArray(bitmap), Base64.DEFAULT);
+        return Base64.encodeToString(
+            toByteArray(
+                bitmap
+            ), Base64.DEFAULT);
     }
 
     fun fromByteArray(bytes: ByteArray): Bitmap {

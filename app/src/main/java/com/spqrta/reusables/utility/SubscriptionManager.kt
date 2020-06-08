@@ -1,4 +1,4 @@
-package com.spqrta.reusables.util
+package com.spqrta.reusables.utility
 
 import io.reactivex.Observable
 import io.reactivex.Single

@@ -1,15 +1,15 @@
-package com.spqrta.reusables.util
+package com.spqrta.reusables.utility.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.core.content.ContextCompat.startActivity
 
-object Intents {
+object IntentUtils {
     @SuppressLint("MissingPermission")
     fun initiateCall(context: Context, number: String) {
         val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number"));
         context.startActivity(intent)
     }
+
 }

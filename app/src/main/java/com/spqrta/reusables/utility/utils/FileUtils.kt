@@ -1,4 +1,4 @@
-package com.spqrta.reusables.util
+package com.spqrta.reusables.utility.utils
 
 import java.io.*
 
@@ -9,7 +9,12 @@ object FileUtils {
         if (dir.isDirectory) {
             val children = dir.list()!!
             for (child in children) {
-                val success = delete(File(dir, child))
+                val success = delete(
+                    File(
+                        dir,
+                        child
+                    )
+                )
 //            if (!success) {
 //                return false;
 //            }

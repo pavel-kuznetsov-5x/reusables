@@ -4,7 +4,7 @@ import com.spqrta.reusables.CustomApplication
 import com.spqrta.reusables.base.JustError
 import com.spqrta.reusables.base.Payload
 import com.spqrta.reusables.base.State
-import com.spqrta.reusables.util.Toaster
+import com.spqrta.reusables.utility.Toaster
 
 interface ErrorToastMixin {
 
