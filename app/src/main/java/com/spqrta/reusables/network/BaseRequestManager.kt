@@ -1,6 +1,6 @@
 package com.spqrta.reusables.network
 
-import com.spqrta.reusables.CustomApplication
+import com.spqrta.reusables.utility.CustomApplication
 import com.spqrta.reusables.utility.Logger
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

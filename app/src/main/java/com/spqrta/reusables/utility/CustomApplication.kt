@@ -1,9 +1,8 @@
-package com.spqrta.reusables
+package com.spqrta.reusables.utility
 
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import com.spqrta.reusables.utility.Toaster
 
 open class CustomApplication: Application() {
 
@@ -19,7 +18,8 @@ open class CustomApplication: Application() {
         }
     }
 
-    open fun createAppConfig() = AppConfig()
+    open fun createAppConfig() =
+        AppConfig()
 
     companion object {
         @SuppressLint("StaticFieldLeak")
@@ -27,7 +27,8 @@ open class CustomApplication: Application() {
 
         lateinit var appConfig: AppConfig
 
-        fun analytics() = analytics
+        fun analytics() =
+            analytics
 
         private var analytics: Analytics = object : Analytics() {}
 

@@ -2,7 +2,6 @@ package com.spqrta.reusables.utility
 
 import android.widget.Toast
 import androidx.annotation.StringRes
-import com.spqrta.reusables.CustomApplication
 
 class Toaster {
     companion object {

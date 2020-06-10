@@ -1,7 +1,7 @@
-package com.spqrta.reusables
+package com.spqrta.reusables.utility
 
 import retrofit2.HttpException
-import com.spqrta.reusables.network.isNetworkError
+import com.spqrta.reusables.utility.utils.isNetworkError
 
 abstract class Analytics {
 

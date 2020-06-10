@@ -1,7 +1,6 @@
 package com.spqrta.reusables.utility
 
 import android.util.Log
-import com.spqrta.reusables.CustomApplication
 
 object Logger {
 

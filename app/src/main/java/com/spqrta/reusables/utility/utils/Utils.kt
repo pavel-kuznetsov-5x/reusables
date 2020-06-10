@@ -26,13 +26,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import org.json.JSONArray
 import org.json.JSONObject
 import org.threeten.bp.LocalDate
-import com.spqrta.reusables.CustomApplication
+import com.spqrta.reusables.utility.CustomApplication
 import io.reactivex.Single
 import java.io.InputStream
-import java.net.ConnectException
-import java.net.NoRouteToHostException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 
 
@@ -303,17 +299,6 @@ fun <T : Any?> MutableLiveData<T>.initWith(initialValue: T) = apply { setValue(i
 
 fun <T : Any?> MutableLiveData<T>.init(initializer: () -> T) =
     apply { setValue(initializer.invoke()) }
-
-fun Throwable.isNetworkError(t: Throwable): Boolean {
-    return (t is SocketTimeoutException
-            ||
-            t is UnknownHostException
-            ||
-            t is ConnectException
-            ||
-            t is NoRouteToHostException
-            )
-}
 
 fun String?.nullIfEmpty(): String? = if (this.isNullOrEmpty()) {
     null

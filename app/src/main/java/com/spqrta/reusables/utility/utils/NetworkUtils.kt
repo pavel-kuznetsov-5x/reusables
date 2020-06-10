@@ -1,4 +1,4 @@
-package com.spqrta.reusables.network
+package com.spqrta.reusables.utility.utils
 
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -6,10 +6,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.exceptions.CompositeException
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
-import com.spqrta.reusables.CustomApplication
+import com.spqrta.reusables.utility.CustomApplication
 import com.spqrta.reusables.network.NetworkError
 import java.net.ConnectException
-import java.net.NoRouteToHostException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 

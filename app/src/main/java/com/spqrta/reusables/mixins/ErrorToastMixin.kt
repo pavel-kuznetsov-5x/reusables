@@ -1,6 +1,6 @@
 package com.spqrta.reusables.mixins
 
-import com.spqrta.reusables.CustomApplication
+import com.spqrta.reusables.utility.CustomApplication
 import com.spqrta.reusables.base.JustError
 import com.spqrta.reusables.base.Payload
 import com.spqrta.reusables.base.State

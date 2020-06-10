@@ -1,7 +1,7 @@
 package com.spqrta.reusables.utility.utils
 
 import android.preference.PreferenceManager
-import com.spqrta.reusables.CustomApplication
+import com.spqrta.reusables.utility.CustomApplication
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 
