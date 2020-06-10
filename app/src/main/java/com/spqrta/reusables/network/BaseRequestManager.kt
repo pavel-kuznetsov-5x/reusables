@@ -9,9 +9,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-open class BaseRequestManager {
+abstract class BaseRequestManager {
 
-    val baseUrl: String = "https://stage.phased.io/api/"
+    abstract val baseUrl: String
 
     val retrofit: Retrofit
 
