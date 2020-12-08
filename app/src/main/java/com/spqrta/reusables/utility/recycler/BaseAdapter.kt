@@ -1,4 +1,4 @@
-package com.spqrta.reusables.recycler
+package com.spqrta.reusables.utility.recycler
 
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +35,7 @@ abstract class BaseAdapter<T : Any, VH : BaseAdapter.BaseVh<T>> : RecyclerView.A
         }
     }
 
+    //todo handle forgetting override this method
     open fun createViewHolder(view: View, baseClickListener: ((Int) -> Unit)): VH {
         return BaseVh<T>(
             view,

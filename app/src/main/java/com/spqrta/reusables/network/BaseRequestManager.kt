@@ -9,6 +9,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 
+@Suppress("LeakingThis")
 abstract class BaseRequestManager {
 
     abstract val baseUrl: String
@@ -25,9 +26,11 @@ abstract class BaseRequestManager {
 
         val clientBuilder = OkHttpClient.Builder()
 
+        buildClient(clientBuilder)
         if (CustomApplication.appConfig.debugMode) {
             clientBuilder.addInterceptor(interceptor)
         }
+
 
         val client = clientBuilder
             .build()

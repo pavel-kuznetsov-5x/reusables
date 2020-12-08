@@ -1,11 +1,22 @@
 package com.spqrta.reusables.utility.utils
 
 import android.annotation.SuppressLint
+import android.content.res.Resources
 import android.os.Build
+import android.util.DisplayMetrics
+import android.util.Size
+import com.spqrta.reusables.utility.CustomApplication
+
 
 @SuppressLint("DefaultLocale")
 object DeviceInfoUtils {
 
+    fun getScreenSize(): Size {
+        return Size(
+            Resources.getSystem().displayMetrics.widthPixels,
+            Resources.getSystem().displayMetrics.heightPixels
+        )
+    }
 
     fun getModel(): String {
         return Build.MODEL.toUpperCase()

@@ -7,7 +7,7 @@ import io.reactivex.exceptions.CompositeException
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import com.spqrta.reusables.utility.CustomApplication
-import com.spqrta.reusables.network.NetworkError
+import com.spqrta.reusables.utility.NetworkError
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
