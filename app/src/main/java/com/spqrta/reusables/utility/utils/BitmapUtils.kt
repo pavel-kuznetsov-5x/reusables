@@ -42,10 +42,7 @@ object BitmapUtils {
     }
 
     fun toBase64(bitmap: Bitmap): String {
-        return Base64.encodeToString(
-            toByteArray(
-                bitmap
-            ), Base64.DEFAULT);
+        return Base64.encodeToString(toByteArray(bitmap), Base64.DEFAULT);
     }
 
     fun fromByteArray(bytes: ByteArray): Bitmap {

@@ -1,4 +1,4 @@
-package com.spqrta.reusables.utility.utils
+package com.spqrta.camera2.utils
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -20,14 +20,15 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
+import com.spqrta.reusables.utility.CustomApplication
 import io.reactivex.Observable
 import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.json.JSONArray
 import org.json.JSONObject
 import org.threeten.bp.LocalDate
-import com.spqrta.reusables.utility.CustomApplication
-import io.reactivex.Single
+import java.io.File
 import java.io.InputStream
 import java.util.concurrent.TimeUnit
 
@@ -52,8 +53,10 @@ object Utils {
     }
 
     fun setStatusBarColor(
-        activity: Activity, @ColorRes color: Int,
-        setLight: Boolean? = null, @ColorRes compatColor: Int? = null
+        activity: Activity,
+        @ColorRes color: Int,
+        setLight: Boolean? = null,
+        @ColorRes compatColor: Int? = null
     ) {
         if (setLight != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -113,11 +116,7 @@ object Utils {
             )
             root
         } else {
-            JSONObject(
-                readFromStream(
-                    inputStream
-                )
-            )
+            JSONObject(readFromStream(inputStream))
         }
         return json
     }
@@ -209,7 +208,6 @@ open class RxStringResult(value: String) : RxResult<String>(value) {
 }
 
 
-
 object TimerObservable {
     fun timer(delay: Int): Observable<Long> {
         return timer(delay.toLong())
@@ -220,7 +218,7 @@ object TimerObservable {
     }
 
     fun interval(delay: Int, initialDelay: Int? = null): Observable<Long> {
-        return if(initialDelay == null) {
+        return if (initialDelay == null) {
             Observable.interval(
                 delay.toLong(),
                 TimeUnit.MILLISECONDS,

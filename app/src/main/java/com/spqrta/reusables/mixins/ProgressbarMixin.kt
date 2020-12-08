@@ -1,11 +1,11 @@
 package com.spqrta.reusables.mixins
 
 import android.view.View
+import com.spqrta.camera2.utils.hide
+import com.spqrta.camera2.utils.show
 import com.spqrta.reusables.base.JustLoading
 import com.spqrta.reusables.base.Payload
 import com.spqrta.reusables.base.State
-import com.spqrta.reusables.utility.utils.hide
-import com.spqrta.reusables.utility.utils.show
 
 interface ProgressbarMixin {
 
