@@ -2,7 +2,8 @@ package com.spqrta.reusables.utility
 
 import android.util.Log
 
-object Logger {
+//todo multi
+object Logg {
 
     private val logEnabled = CustomApplication.appConfig.debugMode
     var externalLogConsumer: LogConsumer? = null

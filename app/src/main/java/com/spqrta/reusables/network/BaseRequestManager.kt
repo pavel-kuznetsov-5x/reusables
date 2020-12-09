@@ -1,7 +1,7 @@
 package com.spqrta.reusables.network
 
 import com.spqrta.reusables.utility.CustomApplication
-import com.spqrta.reusables.utility.Logger
+import com.spqrta.reusables.utility.Logg
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -19,7 +19,7 @@ abstract class BaseRequestManager {
     init {
         val interceptor = HttpLoggingInterceptor { message ->
             if (CustomApplication.appConfig.debugMode) {
-                Logger.v(message)
+                Logg.v(message)
             }
         }
         interceptor.level = HttpLoggingInterceptor.Level.BODY

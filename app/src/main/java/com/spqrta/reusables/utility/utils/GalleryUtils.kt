@@ -3,10 +3,9 @@ package com.spqrta.reusables.utility.utils
 import android.app.Activity
 import android.database.Cursor
 import android.graphics.Bitmap
+import android.os.Environment
 import android.provider.MediaStore
-import com.spqrta.reusables.utility.CustomApplication
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.format.DateTimeFormatter
+import java.io.File
 
 object GalleryUtils {
 
@@ -30,10 +29,25 @@ object GalleryUtils {
         return galleryImageUrls
     }
 
+    //todo
     fun addToGallery(bitmap: Bitmap, title: String? = null) {
-        MediaStore.Images.Media.insertImage(
-            CustomApplication.context.contentResolver, bitmap, title ?: LocalDateTime.now().format(
-            DateTimeFormatter.ISO_DATE_TIME)+".jpg" , "")
+//        val filename = title ?: LocalDateTime.now().format(
+//            DateTimeFormatter.ISO_DATE_TIME
+//        ) + ".jpg"
+//        val filePath = CustomApplication.context.externalCacheDir?.absolutePath + "/" + filename
+//        Logger.d(filePath)
+//        BitmapUtils.toFile(filePath, bitmap, quality = 95)
+//        MediaStore.Images.Media.insertImage(CustomApplication.context.contentResolver, bitmap,  , "")
     }
+
+    //todo
+    private fun getGalleryPath(): String? {
+        val folder: File = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+        if (!folder.exists()) {
+            folder.mkdir()
+        }
+        return folder.absolutePath
+    }
+
 
 }

@@ -1,4 +1,4 @@
-package com.spqrta.camera2.utils
+package com.spqrta.reusables.utility.utils
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -20,15 +20,14 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
-import com.spqrta.reusables.utility.CustomApplication
 import io.reactivex.Observable
 import io.reactivex.Scheduler
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.json.JSONArray
 import org.json.JSONObject
 import org.threeten.bp.LocalDate
-import java.io.File
+import com.spqrta.reusables.utility.CustomApplication
+import io.reactivex.Single
 import java.io.InputStream
 import java.util.concurrent.TimeUnit
 
@@ -208,6 +207,7 @@ open class RxStringResult(value: String) : RxResult<String>(value) {
 }
 
 
+
 object TimerObservable {
     fun timer(delay: Int): Observable<Long> {
         return timer(delay.toLong())
@@ -304,12 +304,12 @@ fun String?.nullIfEmpty(): String? = if (this.isNullOrEmpty()) {
     this
 }
 
-fun Size.toStringHw(): String {
-    return "${height}x$width"
+fun Size.toStringWh(): String {
+    return "${width}x$height ${aspectRatio()}"
 }
 
-fun Size.toStringWh(): String {
-    return "${width}x$height"
+fun Size.aspectRatio(): Float {
+    return width.toFloat()/height
 }
 
 fun <T> T?.replaceIfNull(obj: T): T {
