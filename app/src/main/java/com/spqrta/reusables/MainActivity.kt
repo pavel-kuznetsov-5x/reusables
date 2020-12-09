@@ -2,11 +2,9 @@ package com.spqrta.reusables
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.spqrta.reusables.base.display.NavActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : NavActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
+    override val layoutRes: Int = R.layout.activity_main
 }
