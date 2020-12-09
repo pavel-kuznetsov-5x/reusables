@@ -4,9 +4,8 @@ import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Response
 import com.spqrta.reusables.utility.CustomApplication
-import com.spqrta.reusables.utility.utils.AppUtils
+import com.spqrta.reusables.utility.pure.AppUtils
 
-//todo reusables
 open class BackendException(
     val code: Int,
     val response: Response<*>?,

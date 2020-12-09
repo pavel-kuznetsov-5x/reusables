@@ -5,7 +5,6 @@ import com.spqrta.reusables.MainActivity
 import com.spqrta.reusables.base.display.BaseFragment
 import com.spqrta.reusables.utility.CustomApplication
 
-//todo reusables
 open class StateDelegate<T>(
     fragment: BaseFragment<MainActivity>
 ) : BaseFragment.FragmentDelegate<MainActivity>(fragment) {

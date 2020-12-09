@@ -1,10 +1,12 @@
 package com.spqrta.reusables.utility.utils
 
 import android.view.View
+import com.spqrta.reusables.utility.pure.Stub
+import com.spqrta.reusables.utility.pure.hide
+import com.spqrta.reusables.utility.pure.show
 import io.reactivex.Single
-
-//todo reusables
-//todo collect form others
+import io.reactivex.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 object RxUtils {
     fun initialSingle(): Single<Stub> {
@@ -18,19 +20,6 @@ object RxUtils {
     }
 }
 
-class TaskFailedException(): Exception()
-
-//fun <T> Task<T>.toSingle(): Single<T> {
-//    val subject = SingleSubject.create<T>()
-//    addOnCompleteListener {
-//        if(it.isSuccessful) {
-//            subject.onSuccess(it.result)
-//        } else {
-//            subject.onError(TaskFailedException())
-//        }
-//    }
-//    return subject
-//}
 
 fun <T> Single<T>.disableClicksWhenLoading(vararg views: View): Single<T> {
     return doOnSubscribe {
@@ -42,4 +31,27 @@ fun <T> Single<T>.disableClicksWhenLoading(vararg views: View): Single<T> {
             it.isClickable = true
         }
     }
+}
+
+open class RxResult<T>(val value: T)
+open class RxStringResult(value: String) : RxResult<String>(value) {
+    override fun toString() = value
+}
+
+class AccessToken(value: String) : RxStringResult(value)
+
+fun <T> Single<T>.delayExecution(milliseconds: Int): Single<T> {
+    return delay(milliseconds.toLong(), TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+}
+
+fun <T> Single<T>.attachProgressbar(progressBar: View): Single<T> {
+    return doOnSubscribe {
+        progressBar.show()
+    }.doOnEvent { _, _ ->
+        progressBar.hide()
+    }
+}
+
+fun <T> Single<T>.delayExecution(milliseconds: Long): Single<T> {
+    return delay(milliseconds, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
 }

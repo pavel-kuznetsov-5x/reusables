@@ -1,4 +1,4 @@
-package com.spqrta.reusables.utility.utils
+package com.spqrta.reusables.utility.pure
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -141,7 +141,7 @@ object Utils {
     }
 
     fun setKeepScreenOn(window: Window, disable: Boolean) {
-        if(disable) {
+        if (disable) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         } else {
             window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -160,29 +160,6 @@ class Optional<M>(private val optional: M?) {
         }
         return optional
     }
-}
-
-//todo separate file
-object DpUtils {
-    fun dpToPx(dp: Int, context: Context? = null): Float {
-        return dpToPx(dp.toFloat(), context)
-    }
-
-    fun dpToPx(dp: Float, context: Context? = null): Float {
-        return dp * (context ?: CustomApplication.context).resources.displayMetrics.density
-    }
-
-    fun pxToDp(px: Float, context: Context? = null): Float {
-        return px / (context ?: CustomApplication.context).resources.displayMetrics.density
-    }
-}
-
-fun Int.dpToPx(): Float {
-    return DpUtils.dpToPx(this)
-}
-
-fun Float.dpToPx(): Float {
-    return DpUtils.dpToPx(this)
 }
 
 object DatePickerUtil {
@@ -215,136 +192,11 @@ object Base64Utils {
     }
 }
 
-//class AccessToken(value: String) : RxStringResult(value)
-//Single<AccessToken>
-class Empty
+object Stub : Any()
 
-open class RxResult<T>(val value: T)
-open class RxStringResult(value: String) : RxResult<String>(value) {
-    override fun toString() = value
-}
-
-
-//todo separate file
-object TimerUtils {
-    fun timer(delay: Int): Single<Long> {
-        return timer(delay.toLong())
-    }
-
-    fun timer(delay: Long, scheduler: Scheduler = AndroidSchedulers.mainThread()): Single<Long> {
-        return Single.timer(delay, TimeUnit.MILLISECONDS, scheduler)
-    }
-
-    fun interval(delay: Int, initialDelay: Int? = null, scheduler: Scheduler = AndroidSchedulers.mainThread()): Observable<Long> {
-        return if(initialDelay == null) {
-            Observable.interval(
-                delay.toLong(),
-                TimeUnit.MILLISECONDS,
-                scheduler
-            )
-        } else {
-            Observable.interval(
-                initialDelay.toLong(),
-                delay.toLong(),
-                TimeUnit.MILLISECONDS,
-                scheduler
-            )
-        }
-    }
-
-    fun interval(delay: Long): Observable<Long> {
-        return Observable.interval(delay, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-    }
-}
-
-object Stub: Any()
-
-fun String.toBase64(): String {
-    return Base64Utils.encode(this)
-}
-
-fun View.hide() {
-    visibility = View.GONE
-}
-
-fun View.makeInvisible() {
-    visibility = View.INVISIBLE
-}
-
-fun View.show() {
-    visibility = View.VISIBLE
-}
-
-fun View.setInvisibleState(value: Boolean) {
-    visibility = if (value) {
-        View.INVISIBLE
-    } else {
-        View.VISIBLE
-    }
-}
-
-//todo to view utils
-fun View.setGoneState(value: Boolean): View {
-    visibility = if (value) {
-        View.GONE
-    } else {
-        View.VISIBLE
-    }
-    return this
-}
-
-//todo to view utils
-fun View.goneIfNull(value: Any?) {
-    visibility = if (value == null) {
-        View.GONE
-    } else {
-        View.VISIBLE
-    }
-}
-
-//todo to view utils
-fun View.goneIfEmpty(value: List<Any>): View {
-    visibility = if (value.isEmpty()) {
-        View.GONE
-    } else {
-        View.VISIBLE
-    }
-    return this
-}
 
 fun Int.toColorInt(): Int {
     return CustomApplication.context.resources.getColor(this)
-}
-
-//todo to view utils
-fun View.showIfEmpty(value: List<Any>) {
-    visibility = if (value.isNotEmpty()) {
-        View.GONE
-    } else {
-        View.VISIBLE
-    }
-}
-
-//todo to rx utils
-fun <T> Single<T>.delayExecution(milliseconds: Int): Single<T> {
-    return delay(milliseconds.toLong(), TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-}
-
-fun <T> Single<T>.attachProgressbar(progressBar: View): Single<T> {
-    return doOnSubscribe {
-        progressBar.show()
-    }.doOnEvent { _, _ ->
-        progressBar.hide()
-    }
-}
-
-fun <T> Single<T>.delayExecution(milliseconds: Long): Single<T> {
-    return delay(milliseconds, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-}
-
-//todo view utils
-fun TextView.textString(): String {
-    return text.toString()
 }
 
 fun <T : Any?> MutableLiveData<T>.initWith(initialValue: T) = apply { setValue(initialValue) }
@@ -352,21 +204,9 @@ fun <T : Any?> MutableLiveData<T>.initWith(initialValue: T) = apply { setValue(i
 fun <T : Any?> MutableLiveData<T>.init(initializer: () -> T) =
     apply { setValue(initializer.invoke()) }
 
-fun String?.nullIfEmpty(): String? = if (this.isNullOrEmpty()) {
-    null
-} else {
-    this
-}
-
-fun <T : Any?> List<T>.nullIfEmpty(): List<T>? = if (this.isEmpty()) {
-    null
-} else {
-    this
-}
-
 fun <T : Any?> T.nullIf(condition: (T) -> Boolean): T? {
     return this?.let {
-        if(condition.invoke(this)) {
+        if (condition.invoke(this)) {
             null
         } else {
             this
@@ -386,20 +226,8 @@ fun Float.roundTo(decimals: Int): Float {
     return round(this * 10F.pow(decimals)) / 10F.pow(decimals)
 }
 
-fun <T> List<T>?.emptyIfNull(): List<T> {
-    return this ?: listOf<T>()
-}
-
-fun String?.ifNotNullElse(yes: (String) -> Unit, els: () -> Unit) {
-    if(this != null) {
-        yes.invoke(this)
-    } else {
-        els.invoke()
-    }
-}
-
 fun Int?.ifNotNullElse(yes: (Int) -> Unit, els: () -> Unit) {
-    if(this != null) {
+    if (this != null) {
         yes.invoke(this)
     } else {
         els.invoke()

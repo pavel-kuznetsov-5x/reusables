@@ -1,10 +1,9 @@
-package com.spqrta.reusables.utility.utils
+package com.spqrta.reusables.utility.pure
 
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import com.spqrta.reusables.utility.CustomApplication
 
-//todo reusables
 object ResUtils {
 
     fun getString(@StringRes res: Int): String {

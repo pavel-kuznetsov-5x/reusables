@@ -12,7 +12,6 @@ import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-//todo reusables
 abstract class BaseFragment<T : Activity>: Fragment(), ErrorToastMixin {
 
     private var firstResume = true

@@ -1,7 +1,7 @@
 package com.spqrta.reusables.utility.utils
 
-import com.spqrta.reusables.utility.utils.DeviceInfoUtils.HUAWEI_ELE_L29
-import com.spqrta.reusables.utility.utils.DeviceInfoUtils.SAMSUNG_A20_A207
+import com.spqrta.reusables.utility.pure.DeviceInfoUtils.HUAWEI_ELE_L29
+import com.spqrta.reusables.utility.pure.DeviceInfoUtils.SAMSUNG_A20_A207
 
 object PreviewAspectRatio {
 

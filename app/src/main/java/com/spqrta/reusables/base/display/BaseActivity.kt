@@ -16,11 +16,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private lateinit var compositeDisposable: CompositeDisposable
 
-    //todo
-    open fun attachCommonDelegates(fragment: BaseFragment<BaseActivity>)
-            : List<BaseFragment.FragmentDelegate<BaseActivity>> {
-        return listOf()
-    }
+//    open fun attachCommonDelegates(fragment: BaseFragment<BaseActivity>)
+//            : List<BaseFragment.FragmentDelegate<BaseActivity>> {
+//        return listOf()
+//    }
 
     abstract val layoutRes: Int
 

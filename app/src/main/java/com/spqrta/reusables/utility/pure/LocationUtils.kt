@@ -1,4 +1,4 @@
-package com.spqrta.reusables.utility.utils
+package com.spqrta.reusables.utility.pure
 
 import kotlin.math.pow
 

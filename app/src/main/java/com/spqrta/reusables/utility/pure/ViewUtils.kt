@@ -1,4 +1,4 @@
-package com.spqrta.reusables.utility.utils
+package com.spqrta.reusables.utility.pure
 
 import android.content.Context
 import android.text.Editable
@@ -9,6 +9,7 @@ import android.view.ViewTreeObserver
 import android.widget.AdapterView
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -58,7 +59,6 @@ class RxTextWatcher : TextWatcher {
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
     }
 }
-
 
 
 abstract class SimpleOnSelectedItemListener : AdapterView.OnItemSelectedListener {
@@ -141,7 +141,7 @@ fun <T : ViewGroup.LayoutParams> View.applyLayoutParamsTyped(action: (T) -> Unit
     }
 }
 
-//todo replace with doOnLayout
+@Deprecated("replace with doOnLayout")
 fun View.afterLayout(listener: (View) -> Unit) {
     viewTreeObserver.addOnGlobalLayoutListener(object :
         ViewTreeObserver.OnGlobalLayoutListener {
@@ -170,4 +170,62 @@ fun View.ifVisibleElse(callback: (View) -> Unit, elseCallback: (View) -> Unit) {
     } else {
         elseCallback.invoke(this)
     }
+}
+
+fun View.hide() {
+    visibility = View.GONE
+}
+
+fun View.makeInvisible() {
+    visibility = View.INVISIBLE
+}
+
+fun View.show() {
+    visibility = View.VISIBLE
+}
+
+fun View.setInvisibleState(value: Boolean) {
+    visibility = if (value) {
+        View.INVISIBLE
+    } else {
+        View.VISIBLE
+    }
+}
+
+fun View.setGoneState(value: Boolean): View {
+    visibility = if (value) {
+        View.GONE
+    } else {
+        View.VISIBLE
+    }
+    return this
+}
+
+fun View.goneIfNull(value: Any?) {
+    visibility = if (value == null) {
+        View.GONE
+    } else {
+        View.VISIBLE
+    }
+}
+
+fun View.goneIfEmpty(value: List<Any>): View {
+    visibility = if (value.isEmpty()) {
+        View.GONE
+    } else {
+        View.VISIBLE
+    }
+    return this
+}
+
+fun View.showIfEmpty(value: List<Any>) {
+    visibility = if (value.isNotEmpty()) {
+        View.GONE
+    } else {
+        View.VISIBLE
+    }
+}
+
+fun TextView.textString(): String {
+    return text.toString()
 }

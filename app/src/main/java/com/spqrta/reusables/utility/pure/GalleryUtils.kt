@@ -1,4 +1,4 @@
-package com.spqrta.reusables.utility.utils
+package com.spqrta.reusables.utility.pure
 
 import android.app.Activity
 import android.database.Cursor
@@ -29,7 +29,6 @@ object GalleryUtils {
         return galleryImageUrls
     }
 
-    //todo
     fun addToGallery(bitmap: Bitmap, title: String? = null) {
 //        val filename = title ?: LocalDateTime.now().format(
 //            DateTimeFormatter.ISO_DATE_TIME
@@ -40,13 +39,13 @@ object GalleryUtils {
 //        MediaStore.Images.Media.insertImage(CustomApplication.context.contentResolver, bitmap,  , "")
     }
 
-    //todo
     private fun getGalleryPath(): String? {
-        val folder: File = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
-        if (!folder.exists()) {
-            folder.mkdir()
-        }
-        return folder.absolutePath
+//        val folder: File = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+//        if (!folder.exists()) {
+//            folder.mkdir()
+//        }
+//        return folder.absolutePath
+        return null
     }
 
 

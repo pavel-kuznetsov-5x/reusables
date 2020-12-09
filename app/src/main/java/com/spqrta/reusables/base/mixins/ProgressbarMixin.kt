@@ -4,8 +4,8 @@ import android.view.View
 import com.spqrta.reusables.base.display.JustLoading
 import com.spqrta.reusables.base.display.Payload
 import com.spqrta.reusables.base.display.State
-import com.spqrta.reusables.utility.utils.hide
-import com.spqrta.reusables.utility.utils.show
+import com.spqrta.reusables.utility.pure.hide
+import com.spqrta.reusables.utility.pure.show
 
 interface ProgressbarMixin {
 
