@@ -154,11 +154,22 @@ class Optional<M>(private val optional: M?) {
     val isEmpty: Boolean
         get() = this.optional == null
 
+    val isNotEmpty: Boolean
+        get() = !isEmpty
+
     fun get(): M {
         if (optional == null) {
             throw NoSuchElementException("No value present")
         }
         return optional
+    }
+
+    fun getNullable(): M? {
+        return optional
+    }
+
+    companion object {
+        fun <T> nullValue() = Optional<T>(null)
     }
 }
 
