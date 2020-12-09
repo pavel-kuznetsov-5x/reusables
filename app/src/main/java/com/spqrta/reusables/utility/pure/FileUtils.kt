@@ -5,6 +5,13 @@ import java.io.*
 
 object FileUtils {
 
+    fun ensureFolderExists(file: File): File {
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return file
+    }
+
     fun delete(dir: File) {
         if (dir.isDirectory) {
             val children = dir.list()!!
