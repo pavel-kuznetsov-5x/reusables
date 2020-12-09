@@ -60,9 +60,6 @@ abstract class BaseFragment<T : Activity>: Fragment() {
 
     fun onLeave() {
         delegates.forEach { it.onLeave() }
-        //todo check
-//        disposeAll()
-//        Timber.v("--unsubscribe ${System.identityHashCode(this)}")
     }
 
     fun disposeAll() {

@@ -3,10 +3,7 @@ package com.spqrta.reusables.base
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.spqrta.reusables.R
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -23,7 +20,7 @@ open class BaseActivity : AppCompatActivity() {
         return listOf()
     }
 
-    protected open val layoutRes = R.layout.activity_base
+    protected open val layoutRes = R.layout.activity_main
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {

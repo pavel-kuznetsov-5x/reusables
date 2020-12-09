@@ -1,4 +1,4 @@
-package com.spqrta.camera2.utils
+package com.spqrta.reusables.utility.utils
 
 import android.widget.Toast
 import androidx.annotation.StringRes

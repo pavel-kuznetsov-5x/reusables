@@ -1,10 +1,10 @@
 package com.spqrta.reusables.mixins
 
 import com.spqrta.reusables.utility.CustomApplication
-import com.spqrta.reusables.base.JustError
 import com.spqrta.reusables.base.Payload
 import com.spqrta.reusables.base.State
 import com.spqrta.reusables.utility.Toaster
+import com.spqrta.reusables.base.JustError
 
 interface ErrorToastMixin {
 
