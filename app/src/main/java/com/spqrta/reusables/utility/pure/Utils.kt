@@ -229,6 +229,10 @@ fun Size.toStringWh(): String {
     return "${width}x$height"
 }
 
+fun Size.aspectRatio(): Float {
+    return width.toFloat()/height
+}
+
 fun <T> T?.replaceIfNull(obj: T): T {
     return this ?: obj
 }
