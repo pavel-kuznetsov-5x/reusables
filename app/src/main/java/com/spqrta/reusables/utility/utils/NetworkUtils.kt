@@ -15,16 +15,6 @@ import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-fun <T> Observable<T>.applySchedulers(): Observable<T> {
-    return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-}
-
-
-fun <T> Single<T>.applySchedulers(): Single<T> {
-    return subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-}
-
 fun <T> Single<Response<T>>.mapResponseBody(): Single<T> {
     return flatMap {
         if (it.isSuccessful) {

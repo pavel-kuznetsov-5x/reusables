@@ -4,8 +4,10 @@ import android.view.View
 import com.spqrta.reusables.utility.pure.Stub
 import com.spqrta.reusables.utility.pure.hide
 import com.spqrta.reusables.utility.pure.show
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 object RxUtils {
@@ -54,4 +56,14 @@ fun <T> Single<T>.attachProgressbar(progressBar: View): Single<T> {
 
 fun <T> Single<T>.delayExecution(milliseconds: Long): Single<T> {
     return delay(milliseconds, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+}
+
+fun <T> Observable<T>.applySchedulers(): Observable<T> {
+    return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+}
+
+
+fun <T> Single<T>.applySchedulers(): Single<T> {
+    return subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
 }
