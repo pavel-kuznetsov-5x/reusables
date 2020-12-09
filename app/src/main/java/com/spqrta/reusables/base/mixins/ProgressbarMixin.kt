@@ -1,9 +1,9 @@
-package com.spqrta.reusables.mixins
+package com.spqrta.reusables.base.mixins
 
 import android.view.View
-import com.spqrta.reusables.base.JustLoading
-import com.spqrta.reusables.base.Payload
-import com.spqrta.reusables.base.State
+import com.spqrta.reusables.base.display.JustLoading
+import com.spqrta.reusables.base.display.Payload
+import com.spqrta.reusables.base.display.State
 import com.spqrta.reusables.utility.utils.hide
 import com.spqrta.reusables.utility.utils.show
 

@@ -1,4 +1,4 @@
-package com.spqrta.reusables.utility
+package com.spqrta.reusables.base.network
 
 import com.spqrta.reusables.utility.CustomApplication
 import com.spqrta.reusables.R

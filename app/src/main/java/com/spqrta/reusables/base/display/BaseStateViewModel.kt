@@ -1,4 +1,4 @@
-package com.spqrta.reusables.base
+package com.spqrta.reusables.base.display
 
 import androidx.lifecycle.MutableLiveData
 
