@@ -11,6 +11,12 @@ abstract class BaseAdapter<T : Any, VH : BaseAdapter.BaseVh<T>> : RecyclerView.A
 
     val items: MutableList<T> = mutableListOf<T>()
 
+    fun deleteItem(item: T) {
+        items.remove(item)
+        notifyDataSetChanged()
+//        notifyItemRemoved()
+    }
+
     fun updateItems(_items: List<T>) {
         items.clear()
         addItemsAndUpdate(_items)
