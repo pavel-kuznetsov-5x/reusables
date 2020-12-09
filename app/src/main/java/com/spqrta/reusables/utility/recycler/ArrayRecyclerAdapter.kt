@@ -14,20 +14,10 @@ open class ArrayRecyclerAdapter<T: Any>: BaseAdapter<T, BaseAdapter.BaseVh<T>>()
 
     override val itemLayoutResource: Int = 0
 
-    open val arrayLayoutResource: Int? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseVh<T> {
         return createViewHolder(
-            if(arrayLayoutResource == null) {
-                FrameLayout(parent.context).apply {
-                    addView(TextView(parent.context))
-                }
-            }  else {
-                LayoutInflater.from(parent.context).inflate(
-                    arrayLayoutResource!!,
-                    parent,
-                    false
-                )
+            FrameLayout(parent.context).apply {
+                addView(TextView(parent.context))
             }
         ) { position ->
             onItemClickListener?.invoke(items[position])
@@ -40,11 +30,7 @@ open class ArrayRecyclerAdapter<T: Any>: BaseAdapter<T, BaseAdapter.BaseVh<T>>()
 
     open inner class VhText<R: Any>(override val containerView: View, listener: (Int) -> Unit): BaseVh<R>(containerView, listener), LayoutContainer {
         override fun bind(item: R) {
-            if(arrayLayoutResource != null) {
-                containerView.text.text = item.toString()
-            } else {
-                ((containerView as ViewGroup).getChildAt(0) as TextView).text = item.toString()
-            }
+            ((containerView as ViewGroup).getChildAt(0) as TextView).text = item.toString()
         }
     }
 }
