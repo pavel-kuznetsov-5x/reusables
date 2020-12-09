@@ -32,6 +32,25 @@ object FileUtils {
         }
     }
 
+    fun clear(dir: File) {
+        if (dir.isDirectory) {
+            val children = dir.list()!!
+            for (child in children) {
+                val success = delete(
+                    File(
+                        dir,
+                        child
+                    )
+                )
+//            if (!success) {
+//                return false;
+//            }
+            }
+        } else {
+            throw IllegalArgumentException("not a directory")
+        }
+    }
+
     fun writeToFile(file: File, data: String, append: Boolean = false) {
         try {
             val f = FileOutputStream(file, append)
