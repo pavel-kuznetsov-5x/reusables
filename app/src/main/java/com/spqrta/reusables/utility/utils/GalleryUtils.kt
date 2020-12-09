@@ -35,7 +35,7 @@ object GalleryUtils {
 //            DateTimeFormatter.ISO_DATE_TIME
 //        ) + ".jpg"
 //        val filePath = CustomApplication.context.externalCacheDir?.absolutePath + "/" + filename
-//        Logger.d(filePath)
+//        Logg.d(filePath)
 //        BitmapUtils.toFile(filePath, bitmap, quality = 95)
 //        MediaStore.Images.Media.insertImage(CustomApplication.context.contentResolver, bitmap,  , "")
     }

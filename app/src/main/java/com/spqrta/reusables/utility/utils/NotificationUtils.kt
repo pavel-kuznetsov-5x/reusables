@@ -1,6 +1,5 @@
 package com.spqrta.reusables.utility.utils
 
-import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -10,7 +9,6 @@ import android.media.RingtoneManager
 import android.os.Build
 import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat
-import java.util.*
 
 object NotificationUtils {
     const val NOTIFICATION_CHANNEL_ID = "notification_channel"

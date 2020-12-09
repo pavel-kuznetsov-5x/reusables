@@ -1,4 +1,3 @@
 package com.spqrta.reusables.base.network
 
-class NetworkError: Throwable() {
-}
+class NetworkError: Throwable()

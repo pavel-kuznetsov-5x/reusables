@@ -1,6 +1,5 @@
 package com.spqrta.reusables.utility
 
-//todo to reusables
 class Meter(
     private val tag: String = "",
     private val showThread: Boolean = false,
