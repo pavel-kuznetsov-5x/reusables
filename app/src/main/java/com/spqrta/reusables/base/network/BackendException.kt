@@ -5,10 +5,11 @@ import org.json.JSONObject
 import retrofit2.Response
 import com.spqrta.reusables.utility.CustomApplication
 import com.spqrta.reusables.utility.pure.AppUtils
+import org.json.JSONArray
 
 open class BackendException(
     val code: Int,
-    val response: Response<*>?,
+    private val response: Response<*>?,
     private val errorBody: String?
 ) : RuntimeException() {
 
@@ -20,7 +21,7 @@ open class BackendException(
                 JSONObject("{message:\"No message\"}")
             }
         } catch (e: JSONException) {
-            JSONObject("{message:\"No message\"}")
+            JSONObject("{message:\"Error parsing failed\"}")
         }
     }
 
@@ -28,22 +29,22 @@ open class BackendException(
         get() = jsonBody.getString("message")
 
     override fun toString(): String {
-        //todo move parsing out
-        return if(jsonBody.has("errors")) {
-            try {
-                jsonBody.getJSONObject("errors").keys().asSequence().map {
-                    jsonBody.getJSONObject("errors").getJSONArray(it).get(0)
-                }.joinToString("\n")
-            } catch (e: JSONException) {
-                CustomApplication.analytics().logException(e)
-                message ?: "No message"
-            }
-        } else {
-            return AppUtils.ifReleaseModeElse({
-                message ?: "No message"
-            }, {
-                "${code} ${response?.raw()?.request()?.url()}: ${message}"
-            })
+        return AppUtils.ifReleaseModeElse({
+            message ?: "No message"
+        }, {
+            "${code} ${response?.raw()?.request()?.url()}: ${message}"
+        })
+    }
+
+//    val multipleErrors: Boolean
+//        get() = jsonBody.has("errors")
+
+    companion object {
+        fun parseErrors(errors: JSONArray): List<String> {
+//            jsonBody.getJSONObject("errors").keys().asSequence().map {
+//                jsonBody.getJSONObject("errors").getJSONArray(it).get(0)
+//            }.joinToString("\n")
+            return listOf()
         }
     }
 }

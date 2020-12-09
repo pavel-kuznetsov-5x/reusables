@@ -35,12 +35,12 @@ abstract class BaseAdapter<T : Any, VH : BaseAdapter.BaseVh<T>> : RecyclerView.A
         }
     }
 
-    //todo handle forgetting override this method
     open fun createViewHolder(view: View, baseClickListener: ((Int) -> Unit)): VH {
-        return BaseVh<T>(
-            view,
-            baseClickListener
-        ) as VH
+        throw NotImplementedError("createViewHolder")
+//        return BaseVh<T>(
+//            view,
+//            baseClickListener
+//        ) as VH
     }
 
     override fun getItemCount(): Int = items.size
