@@ -1,19 +1,50 @@
 package com.spqrta.reusables.base.network
 
+import org.json.JSONException
+import org.json.JSONObject
+import retrofit2.Response
 import com.spqrta.reusables.utility.CustomApplication
-import com.spqrta.reusables.R
+import com.spqrta.reusables.utility.utils.AppUtils
 
-open class BackendException(val userText: String?, message: String?): RuntimeException(message) {
+//todo reusables
+open class BackendException(
+    val code: Int,
+    val response: Response<*>?,
+    private val errorBody: String?
+) : RuntimeException() {
 
-    override val message: String?
-        get() = toString()
-
-    private val serverErrorText by lazy {
-        CustomApplication.context.resources.getString(R.string.server_error)
+    private val jsonBody by lazy {
+        try {
+            if (errorBody != null) {
+                JSONObject(errorBody)
+            } else {
+                JSONObject("{message:\"No message\"}")
+            }
+        } catch (e: JSONException) {
+            JSONObject("{message:\"No message\"}")
+        }
     }
 
+    override val message: String?
+        get() = jsonBody.getString("message")
+
     override fun toString(): String {
-        val text = userText ?: (message ?: "")
-        return "$serverErrorText: $text"
+        //todo move parsing out
+        return if(jsonBody.has("errors")) {
+            try {
+                jsonBody.getJSONObject("errors").keys().asSequence().map {
+                    jsonBody.getJSONObject("errors").getJSONArray(it).get(0)
+                }.joinToString("\n")
+            } catch (e: JSONException) {
+                CustomApplication.analytics().logException(e)
+                message ?: "No message"
+            }
+        } else {
+            return AppUtils.ifReleaseModeElse({
+                message ?: "No message"
+            }, {
+                "${code} ${response?.raw()?.request()?.url()}: ${message}"
+            })
+        }
     }
 }

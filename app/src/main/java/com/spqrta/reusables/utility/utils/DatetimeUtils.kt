@@ -3,6 +3,16 @@ package com.spqrta.reusables.utility.utils
 import org.threeten.bp.*
 import org.threeten.bp.format.DateTimeFormatter
 
+object DatetimeUtils {
+    fun datetimeFromTimestamp(timestamp: Long?, zoneId: ZoneId): LocalDateTime? {
+        return timestamp?.let { datetimeFromTimestamp(it, zoneId) }
+    }
+
+    fun datetimeFromTimestamp(timestamp: Long, zoneId: ZoneId): LocalDateTime {
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), zoneId)
+    }
+}
+
 fun String.parseDate(dateTimeFormatter: DateTimeFormatter): LocalDate {
     return LocalDate.parse(this, dateTimeFormatter)
 }

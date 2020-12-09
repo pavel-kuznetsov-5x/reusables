@@ -20,21 +20,19 @@ abstract class AbstractSimpleAnimationListener : AnimationListener {
 }
 
 fun View.showWithFade(
-    view: View,
     duration: Int = 300,
     callback: () -> Unit = {}
 ) {
-    view.visibility = View.VISIBLE
-    view.alpha = 0f
-    view.animate().alpha(1f).setDuration(duration.toLong())
+    visibility = View.VISIBLE
+    alpha = 0f
+    animate().alpha(1f).setDuration(duration.toLong())
         .setListener(object : AbstractSimpleAnimatorListener() {
             override fun onAnimationEnd(animator: Animator?) {
-                view.alpha = 1f
+                alpha = 1f
                 callback.invoke()
             }
         })
 }
-
 
 fun View.hideWithFade(
     view: View,

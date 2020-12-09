@@ -1,13 +1,15 @@
 package com.spqrta.reusables.utility.utils
 
+import com.spqrta.reusables.base.network.BackendException
+import com.spqrta.reusables.utility.CustomApplication
+import com.spqrta.reusables.base.network.NetworkError
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.exceptions.CompositeException
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 import retrofit2.Response
-import com.spqrta.reusables.utility.CustomApplication
-import com.spqrta.reusables.base.network.NetworkError
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -23,10 +25,26 @@ fun <T> Single<T>.applySchedulers(): Single<T> {
 }
 
 fun <T> Single<Response<T>>.mapResponseBody(): Single<T> {
-    return map {
-        it.body()!!
+    return flatMap {
+        if (it.isSuccessful) {
+            Single.just(it.body())
+        } else {
+            Single.error(HttpException(it))
+        }
     }
 }
+
+fun <T> Single<Response<T>>.mapVoidBody(): Single<Stub> {
+    return flatMap {
+        if (it.isSuccessful) {
+            Single.just(Stub)
+        } else {
+            Single.error(HttpException(it))
+        }
+    }
+}
+
+
 
 fun <T> Single<T>.simulateError(e: Throwable = Exception("Test exception")): Single<T> {
     return flatMap { Single.error<T>(e) }
@@ -44,7 +62,9 @@ fun <T> Single<T>.printErrors(): Single<T> {
 
 fun <T> Single<T>.sendErrorsToAnalytics(): Single<T> {
     return doOnError {
-        CustomApplication.analytics().logException(it)
+        if (it !is BackendException) {
+            CustomApplication.analytics().logException(it)
+        }
     }
 }
 

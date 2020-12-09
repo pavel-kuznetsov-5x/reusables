@@ -5,8 +5,6 @@ import android.app.DatePickerDialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.util.Base64
 import android.util.Size
@@ -22,15 +20,17 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.Observable
 import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.json.JSONArray
 import org.json.JSONObject
 import org.threeten.bp.LocalDate
 import com.spqrta.reusables.utility.CustomApplication
-import io.reactivex.Single
+import com.spqrta.reusables.utility.CustomApplication.Companion.context
 import java.io.InputStream
 import java.util.concurrent.TimeUnit
-
+import kotlin.math.pow
+import kotlin.math.round
 
 object Utils {
     fun copyToClipboard(text: String, showToast: Boolean = false) {
@@ -49,6 +49,13 @@ object Utils {
         activity.currentFocus?.let {
             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
         }
+    }
+
+    fun showKeyboard(activity: Activity, view: View? = null) {
+        view?.requestFocus()
+        val inputMethodManager =
+            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.showSoftInput(activity.currentFocus, 0)
     }
 
     fun setStatusBarColor(
@@ -94,11 +101,6 @@ object Utils {
         } else {
             "${throwable::class.java.simpleName} ${throwable.message}"
         }
-    }
-
-    fun openLink(context: Context, url: String) {
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        context.startActivity(browserIntent)
     }
 
     fun loadJsonFromAssets(filename: String, array: Boolean = false): JSONObject {
@@ -147,7 +149,6 @@ object Utils {
     }
 }
 
-
 class Optional<M>(private val optional: M?) {
 
     val isEmpty: Boolean
@@ -161,10 +162,27 @@ class Optional<M>(private val optional: M?) {
     }
 }
 
+//todo separate file
 object DpUtils {
-    fun dpToPx(context: Context, dp: Int): Float {
-        return dp * context.resources.displayMetrics.density;
+    fun dpToPx(dp: Int, context: Context? = null): Float {
+        return dpToPx(dp.toFloat(), context)
     }
+
+    fun dpToPx(dp: Float, context: Context? = null): Float {
+        return dp * (context ?: CustomApplication.context).resources.displayMetrics.density
+    }
+
+    fun pxToDp(px: Float, context: Context? = null): Float {
+        return px / (context ?: CustomApplication.context).resources.displayMetrics.density
+    }
+}
+
+fun Int.dpToPx(): Float {
+    return DpUtils.dpToPx(this)
+}
+
+fun Float.dpToPx(): Float {
+    return DpUtils.dpToPx(this)
 }
 
 object DatePickerUtil {
@@ -207,29 +225,29 @@ open class RxStringResult(value: String) : RxResult<String>(value) {
 }
 
 
-
-object TimerObservable {
-    fun timer(delay: Int): Observable<Long> {
+//todo separate file
+object TimerUtils {
+    fun timer(delay: Int): Single<Long> {
         return timer(delay.toLong())
     }
 
-    fun timer(delay: Long, scheduler: Scheduler = AndroidSchedulers.mainThread()): Observable<Long> {
-        return Observable.timer(delay, TimeUnit.MILLISECONDS, scheduler)
+    fun timer(delay: Long, scheduler: Scheduler = AndroidSchedulers.mainThread()): Single<Long> {
+        return Single.timer(delay, TimeUnit.MILLISECONDS, scheduler)
     }
 
-    fun interval(delay: Int, initialDelay: Int? = null): Observable<Long> {
-        return if (initialDelay == null) {
+    fun interval(delay: Int, initialDelay: Int? = null, scheduler: Scheduler = AndroidSchedulers.mainThread()): Observable<Long> {
+        return if(initialDelay == null) {
             Observable.interval(
                 delay.toLong(),
                 TimeUnit.MILLISECONDS,
-                AndroidSchedulers.mainThread()
+                scheduler
             )
         } else {
             Observable.interval(
                 initialDelay.toLong(),
                 delay.toLong(),
                 TimeUnit.MILLISECONDS,
-                AndroidSchedulers.mainThread()
+                scheduler
             )
         }
     }
@@ -265,14 +283,49 @@ fun View.setInvisibleState(value: Boolean) {
     }
 }
 
-fun View.setGoneState(value: Boolean) {
+//todo to view utils
+fun View.setGoneState(value: Boolean): View {
     visibility = if (value) {
+        View.GONE
+    } else {
+        View.VISIBLE
+    }
+    return this
+}
+
+//todo to view utils
+fun View.goneIfNull(value: Any?) {
+    visibility = if (value == null) {
         View.GONE
     } else {
         View.VISIBLE
     }
 }
 
+//todo to view utils
+fun View.goneIfEmpty(value: List<Any>): View {
+    visibility = if (value.isEmpty()) {
+        View.GONE
+    } else {
+        View.VISIBLE
+    }
+    return this
+}
+
+fun Int.toColorInt(): Int {
+    return CustomApplication.context.resources.getColor(this)
+}
+
+//todo to view utils
+fun View.showIfEmpty(value: List<Any>) {
+    visibility = if (value.isNotEmpty()) {
+        View.GONE
+    } else {
+        View.VISIBLE
+    }
+}
+
+//todo to rx utils
 fun <T> Single<T>.delayExecution(milliseconds: Int): Single<T> {
     return delay(milliseconds.toLong(), TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
 }
@@ -289,6 +342,7 @@ fun <T> Single<T>.delayExecution(milliseconds: Long): Single<T> {
     return delay(milliseconds, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
 }
 
+//todo view utils
 fun TextView.textString(): String {
     return text.toString()
 }
@@ -304,14 +358,50 @@ fun String?.nullIfEmpty(): String? = if (this.isNullOrEmpty()) {
     this
 }
 
-fun Size.toStringWh(): String {
-    return "${width}x$height ${aspectRatio()}"
+fun <T : Any?> List<T>.nullIfEmpty(): List<T>? = if (this.isEmpty()) {
+    null
+} else {
+    this
 }
 
-fun Size.aspectRatio(): Float {
-    return width.toFloat()/height
+fun <T : Any?> T.nullIf(condition: (T) -> Boolean): T? {
+    return this?.let {
+        if(condition.invoke(this)) {
+            null
+        } else {
+            this
+        }
+    }
+}
+
+fun Size.toStringWh(): String {
+    return "${width}x$height"
 }
 
 fun <T> T?.replaceIfNull(obj: T): T {
     return this ?: obj
+}
+
+fun Float.roundTo(decimals: Int): Float {
+    return round(this * 10F.pow(decimals)) / 10F.pow(decimals)
+}
+
+fun <T> List<T>?.emptyIfNull(): List<T> {
+    return this ?: listOf<T>()
+}
+
+fun String?.ifNotNullElse(yes: (String) -> Unit, els: () -> Unit) {
+    if(this != null) {
+        yes.invoke(this)
+    } else {
+        els.invoke()
+    }
+}
+
+fun Int?.ifNotNullElse(yes: (Int) -> Unit, els: () -> Unit) {
+    if(this != null) {
+        yes.invoke(this)
+    } else {
+        els.invoke()
+    }
 }

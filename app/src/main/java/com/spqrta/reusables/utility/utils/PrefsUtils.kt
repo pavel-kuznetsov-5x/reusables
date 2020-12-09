@@ -21,6 +21,24 @@ abstract class StringSetting : Setting<String?>() {
     }
 }
 
+abstract class IntSetting : Setting<Int?>() {
+    override fun load(): Int? {
+        return if(prefs.contains(key)) {
+            prefs.getInt(key, 0)
+        } else {
+            null
+        }
+    }
+
+    override fun save(value: Int?) {
+        if(value != null) {
+            prefs.edit().putInt(key, value).apply()
+        } else {
+            prefs.edit().remove(key).apply()
+        }
+    }
+}
+
 abstract class NonNullBooleanSetting : Setting<Boolean>() {
     override fun load(): Boolean = prefs.getBoolean(key, false)
 

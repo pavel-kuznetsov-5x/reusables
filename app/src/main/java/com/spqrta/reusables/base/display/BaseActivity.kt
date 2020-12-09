@@ -4,13 +4,15 @@ import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.spqrta.reusables.R
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-open class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
     private lateinit var compositeDisposable: CompositeDisposable
 
@@ -20,7 +22,7 @@ open class BaseActivity : AppCompatActivity() {
         return listOf()
     }
 
-    protected open val layoutRes = R.layout.activity_main
+    abstract val layoutRes: Int
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
