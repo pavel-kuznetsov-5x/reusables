@@ -51,6 +51,14 @@ object FileUtils {
         }
     }
 
+    fun listFiles(file: File): List<File> {
+        return file.listFiles()!!.toList()
+    }
+
+    fun fileSizeBytes(file: File): Long {
+        return file.length()
+    }
+
     fun writeToFile(file: File, data: String, append: Boolean = false) {
         try {
             val f = FileOutputStream(file, append)
