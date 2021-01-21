@@ -39,8 +39,12 @@ object Logg {
         }
     }
 
-    fun logListMultiline(list: List<*>) {
-        d("\n\n"+list.joinToString("\n"))
+    fun logList(list: List<*>) {
+        d("\n--\n"+list.joinToString("\n"))
+    }
+
+    fun thread(tag: String = "") {
+        Logg.d("$tag - ${Thread.currentThread().name}")
     }
 
     interface LogConsumer {
